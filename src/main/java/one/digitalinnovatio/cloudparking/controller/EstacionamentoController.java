@@ -1,12 +1,13 @@
 package one.digitalinnovatio.cloudparking.controller;
 
+import one.digitalinnovatio.cloudparking.controller.dto.EstacionamentoCreateDTO;
 import one.digitalinnovatio.cloudparking.controller.dto.EstacionamentoDTO;
 import one.digitalinnovatio.cloudparking.controller.mapper.EstacionamentoMapper;
 import one.digitalinnovatio.cloudparking.model.Estacionamento;
 import one.digitalinnovatio.cloudparking.service.EstacionamentoService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,11 +23,25 @@ public class EstacionamentoController {
         this.estacionamentoMapper = estacionamentoMapper;
     }
 
-
     @GetMapping
-    public List<EstacionamentoDTO> findAll(){
+    public ResponseEntity<List<EstacionamentoDTO>> findAll(){
         List<Estacionamento> estacionamentoList = estacionamentoService.findAll();
         List<EstacionamentoDTO> resultado = estacionamentoMapper.toEstacionamentoDTOList(estacionamentoList);
-        return resultado;
+        return ResponseEntity.ok(resultado);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EstacionamentoDTO> findById(@PathVariable String id){
+        Estacionamento estacionamento = estacionamentoService.findById(id);
+        EstacionamentoDTO resultado = estacionamentoMapper.toEstacionamentoDTO(estacionamento);
+        return ResponseEntity.ok(resultado);
+    }
+
+    @PostMapping
+    public ResponseEntity<EstacionamentoDTO> create(@RequestBody EstacionamentoCreateDTO dto){
+        var estacionamentoCreate = estacionamentoMapper.toEstacionamentoCreate(dto);
+        Estacionamento estacionamento = estacionamentoService.create(estacionamentoCreate);
+        EstacionamentoDTO resultado = estacionamentoMapper.toEstacionamentoDTO(estacionamento);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
     }
 }

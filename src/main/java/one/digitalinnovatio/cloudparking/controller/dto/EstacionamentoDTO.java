@@ -1,5 +1,6 @@
 package one.digitalinnovatio.cloudparking.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,11 @@ public class EstacionamentoDTO {
     private String modelo;
     private String cor;
     private String estado;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime horaEntrada;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime horaSaida;
     private Double conta;
 
