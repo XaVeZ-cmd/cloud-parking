@@ -1,8 +1,12 @@
 package one.digitalinnovation.cloudparking.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
+@Entity
 public class Estacionamento {
+    @Id
     private String id;
     private String placa;
     private String modelo;
