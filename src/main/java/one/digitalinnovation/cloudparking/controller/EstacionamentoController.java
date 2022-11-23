@@ -42,6 +42,13 @@ public class EstacionamentoController {
         return ResponseEntity.ok(resultado);
     }
 
+    @DeleteMapping("/{id}")
+    @ApiOperation("Deleta estacionamento")
+    public ResponseEntity delete(@PathVariable String id){
+        estacionamentoService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping
     @ApiOperation("Criar estacionamento")
     public ResponseEntity<EstacionamentoDTO> create(@RequestBody EstacionamentoCreateDTO dto){
@@ -49,5 +56,13 @@ public class EstacionamentoController {
         Estacionamento estacionamento = estacionamentoService.create(estacionamentoCreate);
         EstacionamentoDTO resultado = estacionamentoMapper.toEstacionamentoDTO(estacionamento);
         return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
+    }
+    @PutMapping("/{id}")
+    @ApiOperation("Atualização do estacionamento")
+    public ResponseEntity<EstacionamentoDTO> update(@PathVariable String id, @RequestBody EstacionamentoCreateDTO dto){
+        var estacionamentoCreate = estacionamentoMapper.toEstacionamentoCreate(dto);
+        Estacionamento estacionamento = estacionamentoService.update(id, estacionamentoCreate);
+        EstacionamentoDTO resultado = estacionamentoMapper.toEstacionamentoDTO(estacionamento);
+        return ResponseEntity.status(HttpStatus.OK).body(resultado);
     }
 }

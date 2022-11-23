@@ -48,4 +48,16 @@ public class EstacionamentoService {
         estacionamentoMap.put(uuid, estacionamentoCreate);
         return estacionamentoCreate;
     }
+
+    public void delete(String id) {
+        findById(id);
+        estacionamentoMap.remove(id);
+    }
+
+    public Estacionamento update(String id, Estacionamento estacionamentoCreate) {
+        Estacionamento estacionamento = findById(id);
+        estacionamento.setCor(estacionamentoCreate.getCor());
+        estacionamentoMap.replace(id, estacionamento);
+        return estacionamento;
+    }
 }
