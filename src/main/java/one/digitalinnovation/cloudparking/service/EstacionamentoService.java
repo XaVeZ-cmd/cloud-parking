@@ -2,7 +2,7 @@ package one.digitalinnovation.cloudparking.service;
 
 import one.digitalinnovation.cloudparking.exception.EstacionamentoNotFoundException;
 import one.digitalinnovation.cloudparking.model.Estacionamento;
-import org.springframework.http.ResponseEntity;
+import one.digitalinnovation.cloudparking.repository.EstacionamentoRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,43 +12,45 @@ import java.util.stream.Collectors;
 @Service
 public class EstacionamentoService {
 
-    private static Map<String, Estacionamento> estacionamentoMap = new HashMap();
+        private final EstacionamentoRepository estacionamentoRepository;
 
-        public List<Estacionamento> findAll(){
-            return estacionamentoMap.values().stream().collect(Collectors.toList());
-        }
+    public EstacionamentoService(EstacionamentoRepository estacionamentoRepository) {
+        this.estacionamentoRepository = estacionamentoRepository;
+    }
 
-
+    public List<Estacionamento> findAll(){
+        return estacionamentoRepository.findAll();
+    }
 
     private static String getUUID() {
         return UUID.randomUUID().toString().replace("-", "");
     }
 
     public Estacionamento findById(String id) {
-        Estacionamento estacionamento = estacionamentoMap.get(id);
-        if(estacionamento ==null){
-            throw new EstacionamentoNotFoundException(id);
-        }
-        return estacionamento;
+        return estacionamentoRepository.findById(id).orElseThrow(() ->
+                new EstacionamentoNotFoundException(id));
     }
 
     public Estacionamento create(Estacionamento estacionamentoCreate) {
         String uuid = getUUID();
         estacionamentoCreate.setId(uuid);
         estacionamentoCreate.setHoraEntrada(LocalDateTime.now());
-        estacionamentoMap.put(uuid, estacionamentoCreate);
+        estacionamentoRepository.save(estacionamentoCreate);
         return estacionamentoCreate;
     }
 
     public void delete(String id) {
         findById(id);
-        estacionamentoMap.remove(id);
+        estacionamentoRepository.deleteById(id);
     }
 
     public Estacionamento update(String id, Estacionamento estacionamentoCreate) {
         Estacionamento estacionamento = findById(id);
         estacionamento.setCor(estacionamentoCreate.getCor());
-        estacionamentoMap.replace(id, estacionamento);
+        estacionamento.setPlaca(estacionamentoCreate.getPlaca());
+        estacionamento.setEstado(estacionamentoCreate.getEstado());
+        estacionamento.setModelo(estacionamentoCreate.getModelo());
+        estacionamentoRepository.save(estacionamento);
         return estacionamento;
     }
 
