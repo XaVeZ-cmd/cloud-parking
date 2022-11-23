@@ -65,4 +65,11 @@ public class EstacionamentoController {
         EstacionamentoDTO resultado = estacionamentoMapper.toEstacionamentoDTO(estacionamento);
         return ResponseEntity.status(HttpStatus.OK).body(resultado);
     }
+
+    @PostMapping("/{id}")
+    @ApiOperation("Sair")
+    public ResponseEntity<EstacionamentoDTO> exit(@PathVariable String id){
+        Estacionamento estacionamento = estacionamentoService.exit(id);
+        return ResponseEntity.ok(estacionamentoMapper.toEstacionamentoDTO(estacionamento));
+    }
 }

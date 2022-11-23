@@ -14,15 +14,6 @@ public class EstacionamentoService {
 
     private static Map<String, Estacionamento> estacionamentoMap = new HashMap();
 
-    static {
-        var id = getUUID();
-        var id1 = getUUID();
-        Estacionamento estacionamento = new Estacionamento(id, "PDD-3779", "RENAULT KWID", "BRANCA", "PE");
-        Estacionamento estacionamento1 = new Estacionamento(id1, "PFM-2729", "CHEVROLET CLASSIC", "PRETA", "PE");
-        estacionamentoMap.put(id, estacionamento);
-        estacionamentoMap.put(id1, estacionamento1);
-    }
-
         public List<Estacionamento> findAll(){
             return estacionamentoMap.values().stream().collect(Collectors.toList());
         }
@@ -59,5 +50,12 @@ public class EstacionamentoService {
         estacionamento.setCor(estacionamentoCreate.getCor());
         estacionamentoMap.replace(id, estacionamento);
         return estacionamento;
+    }
+
+    public Estacionamento exit(String id) {
+        //recuperar estacionado
+        //atualizar data de saída
+        //calcular o valor
+        return null;
     }
 }
