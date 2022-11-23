@@ -1,6 +1,8 @@
 package one.digitalinnovation.cloudparking.service;
 
+import one.digitalinnovation.cloudparking.exception.EstacionamentoNotFoundException;
 import one.digitalinnovation.cloudparking.model.Estacionamento;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,7 +34,11 @@ public class EstacionamentoService {
     }
 
     public Estacionamento findById(String id) {
-        return estacionamentoMap.get(id);
+        Estacionamento estacionamento = estacionamentoMap.get(id);
+        if(estacionamento ==null){
+            throw new EstacionamentoNotFoundException(id);
+        }
+        return estacionamento;
     }
 
     public Estacionamento create(Estacionamento estacionamentoCreate) {
