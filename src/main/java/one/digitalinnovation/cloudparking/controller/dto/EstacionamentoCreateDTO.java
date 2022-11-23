@@ -1,4 +1,4 @@
-package one.digitalinnovatio.cloudparking.controller.dto;
+package one.digitalinnovation.cloudparking.controller.dto;
 
 public class EstacionamentoCreateDTO {
     private String placa;

@@ -1,6 +1,6 @@
-package one.digitalinnovatio.cloudparking.service;
+package one.digitalinnovation.cloudparking.service;
 
-import one.digitalinnovatio.cloudparking.model.Estacionamento;
+import one.digitalinnovation.cloudparking.model.Estacionamento;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

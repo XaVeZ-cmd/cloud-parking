@@ -1,8 +1,8 @@
-package one.digitalinnovatio.cloudparking.controller.mapper;
+package one.digitalinnovation.cloudparking.controller.mapper;
 
-import one.digitalinnovatio.cloudparking.controller.dto.EstacionamentoCreateDTO;
-import one.digitalinnovatio.cloudparking.controller.dto.EstacionamentoDTO;
-import one.digitalinnovatio.cloudparking.model.Estacionamento;
+import one.digitalinnovation.cloudparking.controller.dto.EstacionamentoCreateDTO;
+import one.digitalinnovation.cloudparking.controller.dto.EstacionamentoDTO;
+import one.digitalinnovation.cloudparking.model.Estacionamento;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

@@ -1,25 +1,27 @@
-package one.digitalinnovatio.cloudparking.controller.dto;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
+package one.digitalinnovation.cloudparking.model;
 
 import java.time.LocalDateTime;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class EstacionamentoDTO {
-
+public class Estacionamento {
     private String id;
     private String placa;
     private String modelo;
     private String cor;
     private String estado;
-
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime horaEntrada;
-
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime horaSaida;
     private Double conta;
+
+    public Estacionamento(String id, String placa, String modelo, String cor, String estado) {
+        this.id = id;
+        this.placa = placa;
+        this.modelo = modelo;
+        this.cor = cor;
+        this.estado = estado;
+    }
+
+    public Estacionamento() {
+    }
 
     public String getId() {
         return id;
