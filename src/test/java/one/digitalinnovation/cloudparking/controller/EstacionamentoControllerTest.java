@@ -29,6 +29,8 @@
 //    @Test
 //    void quandoFizerFindAllChequeOResultado() {
 //        RestAssured.given()
+//                .auth()
+//                .basic("user", "dio")
 //                .when()
 //                .get("/estacionamento")
 //                .then()
@@ -44,6 +46,8 @@
 //        createDTO.setModelo("BRASÍLIA");
 //        createDTO.setEstado("SP");
 //        RestAssured.given()
+//                .auth()
+//                .basic("user", "dio")
 //                .when()
 //                .contentType(MediaType.APPLICATION_JSON_VALUE)
 //                .body(createDTO)
