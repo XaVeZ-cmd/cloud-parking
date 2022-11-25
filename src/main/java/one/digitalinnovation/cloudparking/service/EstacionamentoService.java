@@ -4,10 +4,12 @@ import one.digitalinnovation.cloudparking.exception.EstacionamentoNotFoundExcept
 import one.digitalinnovation.cloudparking.model.Estacionamento;
 import one.digitalinnovation.cloudparking.repository.EstacionamentoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EstacionamentoService {
@@ -18,6 +20,7 @@ public class EstacionamentoService {
         this.estacionamentoRepository = estacionamentoRepository;
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<Estacionamento> findAll(){
         return estacionamentoRepository.findAll();
     }
@@ -26,11 +29,13 @@ public class EstacionamentoService {
         return UUID.randomUUID().toString().replace("-", "");
     }
 
+    @Transactional(readOnly = true)
     public Estacionamento findById(String id) {
         return estacionamentoRepository.findById(id).orElseThrow(() ->
                 new EstacionamentoNotFoundException(id));
     }
 
+    @Transactional
     public Estacionamento create(Estacionamento estacionamentoCreate) {
         String uuid = getUUID();
         estacionamentoCreate.setId(uuid);
@@ -39,11 +44,13 @@ public class EstacionamentoService {
         return estacionamentoCreate;
     }
 
+    @Transactional
     public void delete(String id) {
         findById(id);
         estacionamentoRepository.deleteById(id);
     }
 
+    @Transactional
     public Estacionamento update(String id, Estacionamento estacionamentoCreate) {
         Estacionamento estacionamento = findById(id);
         estacionamento.setCor(estacionamentoCreate.getCor());
@@ -54,10 +61,12 @@ public class EstacionamentoService {
         return estacionamento;
     }
 
-    public Estacionamento exit(String id) {
-        //recuperar estacionado
-        //atualizar data de saída
-        //calcular o valor
-        return null;
+    @Transactional
+    public Estacionamento checkOut(String id) {
+        Estacionamento estacionamento = findById(id);
+        estacionamento.setHoraSaida(LocalDateTime.now());
+        estacionamento.setConta(EstacionamentoCheckOut.getConta(estacionamento));
+        estacionamentoRepository.save(estacionamento);
+        return estacionamento;
     }
 }
